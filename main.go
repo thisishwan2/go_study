@@ -109,4 +109,16 @@ func main() {
 	fmt.Println(res)
 
 	fmt.Println(canIDrink(16))
+
+	// a=10, b=2
+	a := 2
+	b := a
+	a = 10
+	fmt.Println(a, b)
+	fmt.Println(&a, &b) // &a는 a의 메모리 주소를 나타낸다.
+
+	a_ := 1
+	b_ := &a_
+	fmt.Println(&a_, b_) // b_는 a_의 메모리 주소를 나타낸다.
+	fmt.Println(*b_)     // *b_는 b_의 메모리 주소에 있는 값을 나타낸다. a_의 값이다.
 }
