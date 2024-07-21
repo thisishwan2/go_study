@@ -5,9 +5,25 @@ package main
 import (
 	"fmt"
 	"go_study/something"
+	"strings"
 )
 
 // import "fmt" // fmt는 Go의 패키지중 한가지로 formatting을 담당한다.
+
+// go에서는 자바와 다르게 매개변수의 타입과 함수의 리턴 타입을 뒤에 나타낸다.
+func multiply(a int, b int) int { // == (a, b int)
+	return a * b
+}
+
+// go는 여러개의 리턴값을 반환할 수 있다.
+func returnManyType(name string) (int, string) {
+	return len(name), strings.ToUpper(name)
+}
+
+// 매개변수를 여러개 받는 함수 선어
+func repeatMe(words ...string) { // ... 을 통해서 복수의 매개변수를 받는다는 것을 선어
+	fmt.Println(words)
+}
 
 func main() {
 
@@ -25,4 +41,16 @@ func main() {
 	// 상수 선언
 	const name string = "ran" // 상수는 변하지 않는 값이다.
 
+	// 함수 사용
+	fmt.Println(multiply(2, 2))
+
+	// 여러개의 리턴값을 반환하는 함수 사용
+	totalLength, upperName := returnManyType("ran")
+	fmt.Println(totalLength, upperName)
+
+	//totalLength, _ := returnManyType("ran")
+	//fmt.Println(totalLength)
+
+	// 매개변수를 여러개 받는 함수 사용
+	repeatMe("a", "b", "c", "d", "e")
 }
