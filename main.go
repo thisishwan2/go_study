@@ -121,4 +121,17 @@ func main() {
 	b_ := &a_
 	fmt.Println(&a_, b_) // b_는 a_의 메모리 주소를 나타낸다.
 	fmt.Println(*b_)     // *b_는 b_의 메모리 주소에 있는 값을 나타낸다. a_의 값이다.
+
+	// 배열 선언(크기가 고정)
+	names := [5]string{"a", "b", "c"}
+	fmt.Println(names)
+	fmt.Println(len(names))
+	names[3] = "d"
+	fmt.Println(names)
+
+	// slice 선언(크기가 가변)
+	names2 := []string{"a", "b", "c"}
+	fmt.Println(names2)
+	names2 = append(names2, "d") // append 함수는 슬라이스 명과, 추가할 요소를 매개변수로 받는다.
+	fmt.Println(names2)
 }
