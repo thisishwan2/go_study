@@ -1,10 +1,10 @@
+package something
+
 // 컴파일러는 자동적으로 main 패키지를 찾아 main 함수를 찾는다.
 // main은 오로지 컴파일을 위해 필요한 함수이다.
-package main
 
 import (
 	"fmt"
-	"go_study/something"
 	"strings"
 )
 
@@ -68,11 +68,17 @@ func useSwitch(age int) bool {
 	return false
 }
 
-func main() {
+type person struct {
+	name    string
+	age     int
+	favFood []string
+}
+
+func exam() {
 
 	// 외부 함수 사용
 	fmt.Println("Hello, World!") // 외부에서 import 한 패키지의 함수를 사용하려면 항상 함수명의 시작은 대문자이다.
-	something.SayHello()
+	SayHello()
 
 	// 변수 선언,
 	var tmp string = "a"
@@ -134,4 +140,20 @@ func main() {
 	fmt.Println(names2)
 	names2 = append(names2, "d") // append 함수는 슬라이스 명과, 추가할 요소를 매개변수로 받는다.
 	fmt.Println(names2)
+
+	// map 선언
+	mapEx := map[string]string{"name": "ran", "age": "25"} // map[key의 데이터타입]value의 데이터타입
+	fmt.Println(mapEx)
+	for key, value := range mapEx {
+		fmt.Println(key, value)
+	}
+
+	// struct 선언
+	favFood := []string{"kimchi", "ramen"}
+	// peopleInfo := person{"ran", 25, favFood} // 이런 방식의 코드 스타일은 직관적이지 않음
+	peopleInfo := person{name: "ran", age: 25, favFood: favFood} // 이 방식이 직관적
+	fmt.Println(peopleInfo)
+	fmt.Println(peopleInfo.name)
+	// go에는 클래스가 없고, 생성자도 없다.
+
 }
