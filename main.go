@@ -58,6 +58,16 @@ func canIDrink(age int) bool {
 	return true
 }
 
+func useSwitch(age int) bool {
+	switch age { // if-else와 같이 사용
+	case 10:
+		return true
+	case 20:
+		return false
+	}
+	return false
+}
+
 func main() {
 
 	// 외부 함수 사용
