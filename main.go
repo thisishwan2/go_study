@@ -40,6 +40,24 @@ func lenAndUpperDefer(name string) (length int, uppercase string) { // 리턴 �
 	return
 }
 
+// for 이용
+func superAdd(numbers ...int) int {
+	total := 0
+	for index, number := range numbers {
+		fmt.Println(index, number)
+		total += number
+	}
+	return total
+}
+
+// if-else
+func canIDrink(age int) bool {
+	if koreanAge := age + 2; koreanAge < 18 { // if else문 내부에서만 사용하기 위해서 내부에 변수 선언을 할 수 있다.
+		return false
+	}
+	return true
+}
+
 func main() {
 
 	// 외부 함수 사용
@@ -76,4 +94,9 @@ func main() {
 	lenght, upp = lenAndUpperDefer("ran")
 	fmt.Println(lenght, upp)
 
+	// for 이용
+	res := superAdd(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+	fmt.Println(res)
+
+	fmt.Println(canIDrink(16))
 }
