@@ -25,6 +25,21 @@ func repeatMe(words ...string) { // ... 을 통해서 복수의 매개변수를 
 	fmt.Println(words)
 }
 
+// naked return
+func lenAndUpper(name string) (length int, uppercase string) { // 리턴 변수를 미리 정의
+	length = len(name)
+	uppercase = strings.ToUpper(name)
+	return
+}
+
+// defer : 함수가 끝난 후에 실행되는 함수
+func lenAndUpperDefer(name string) (length int, uppercase string) { // 리턴 변수를 미리 정의
+	defer fmt.Println("I'm done") // 함수가 끝나고 실행되는 함수
+	length = len(name)
+	uppercase = strings.ToUpper(name)
+	return
+}
+
 func main() {
 
 	// 외부 함수 사용
@@ -53,4 +68,12 @@ func main() {
 
 	// 매개변수를 여러개 받는 함수 사용
 	repeatMe("a", "b", "c", "d", "e")
+
+	lenght, upp := lenAndUpper("ran")
+	fmt.Println(lenght, upp)
+
+	// defer 함수의 출력문이 함수 종료후에 나온다.
+	lenght, upp = lenAndUpperDefer("ran")
+	fmt.Println(lenght, upp)
+
 }
