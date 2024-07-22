@@ -5,6 +5,7 @@ package main
 import (
 	"fmt"
 	"go_study/accounts"
+	"go_study/dict"
 )
 
 func main() {
@@ -28,4 +29,25 @@ func main() {
 
 	// String() 메서드를 호출한다.(String을 정의한 경우 내부적으로 찾아서 호출)
 	fmt.Println(account)
+
+	dictionary := dict.Dictionary{}
+	dictionary["hello"] = "Greeting"
+	fmt.Println(dictionary)
+
+	definition, err := dictionary.Search("hello")
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		fmt.Println(definition)
+	}
+
+	err = dictionary.Add("bye", "byebye")
+	fmt.Println(err)
+
+	dictionary.Update("hello", "hi")
+	fmt.Println(dictionary)
+
+	dictionary.Delete("bye")
+	fmt.Println(dictionary)
+
 }
