@@ -3,51 +3,66 @@
 package main
 
 import (
+	"errors"
 	"fmt"
-	"go_study/accounts"
-	"go_study/dict"
+	"net/http"
+	"time"
 )
 
+var errRequestFail = errors.New("Request failed")
+
+// url checker를 만든다.
 func main() {
-	account := accounts.NewAccount("ran")
-	fmt.Println(account)
-	account.Deposit(10)
-	fmt.Println(account.Balance())
-	account.Withdraw(2)
-	fmt.Println(account.Balance())
-	// 아무일도 발생하지 않는다.(0 미만이기 때문에)
-	//account.Withdraw(12)
-	err := account.Withdraw(12) // 에러 반환
-	if err != nil {
-		// log.Fatalln(err) // 에러가 발생하면 프로그램을 종료한다.
-		fmt.Println(err)
-	}
-	fmt.Println(account.Balance())
-	account.ChangeOwner("CHOI")
-	fmt.Println(account)
-	fmt.Println(account.Owner())
 
-	// String() 메서드를 호출한다.(String을 정의한 경우 내부적으로 찾아서 호출)
-	fmt.Println(account)
+	// map 선언 방식
+	//var results = map[string]string{}
+	var results = make(map[string]string) // make는 map을 비어있는 상태로
 
-	dictionary := dict.Dictionary{}
-	dictionary["hello"] = "Greeting"
-	fmt.Println(dictionary)
-
-	definition, err := dictionary.Search("hello")
-	if err != nil {
-		fmt.Println(err)
-	} else {
-		fmt.Println(definition)
+	urls := []string{
+		"https://www.airbnb.com/",
+		"https://www.google.com/",
+		"https://www.amazon.com/",
+		"https://www.reddit.com/",
+		"https://www.google.com/",
+		"https://soundcloud.com/",
+		"https://www.facebook.com/",
+		"https://www.instagram.com/",
+		"https://academy.nomadcoders.co/",
 	}
 
-	err = dictionary.Add("bye", "byebye")
-	fmt.Println(err)
+	// 1. loop를 이용한다. (속도가 느리다.)
+	for _, url := range urls {
+		res := hitURL(url)
 
-	dictionary.Update("hello", "hi")
-	fmt.Println(dictionary)
+		if res == nil {
+			results[url] = "OK"
+		} else {
+			results[url] = "FAILED"
+		}
+		fmt.Println("Checking: ", url)
+	}
 
-	dictionary.Delete("bye")
-	fmt.Println(dictionary)
+	for url, results := range results {
+		fmt.Println(url, results)
+	}
 
+	// 2. goroutine을 이용하여 순차적인 실행을 동시에 처리 한다.
+	// goroutine은 병렬 처리를 위해 사용한다.
+	// goroutine은 main 함수가 종료되면, 끝난다.
+	// 지금 아래와 같이 go를 선언하면 해당 함수가 반환되기전에 main 함수가 종료되어 버려서 gorutine은 소명된다.
+	for _, url := range urls {
+		go hitURL(url)
+	}
+	// 만약 여기서 sleep을 건다면 sleep을 건 시간동안은 goroutine이 실행되어 결과를 확인할 수 있다.
+	time.Sleep(time.Second * 2)
+}
+
+func hitURL(url string) error {
+	response, err := http.Get(url)
+
+	// 에러가 발생하거나, 상태코드가 400 이상이면 에러를 반환한다.
+	if err != nil || response.StatusCode >= 400 {
+		return errRequestFail
+	}
+	return nil
 }
