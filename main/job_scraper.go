@@ -17,10 +17,11 @@ type extractedJob struct {
 	companyName string
 }
 
-var baseUrl string = "https://www.saramin.co.kr/zf_user/search/recruit?&searchword=java"
+var baseUrl string
 
-func main() {
+func scrape(term string) {
 	var jobs []extractedJob
+	baseUrl = "https://www.saramin.co.kr/zf_user/search/recruit?&searchword=" + term
 	c := make(chan []extractedJob)
 	totalPages := getPages()
 
